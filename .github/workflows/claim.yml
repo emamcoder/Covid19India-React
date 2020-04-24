@@ -8,7 +8,11 @@ jobs:
     if: github.event.issue.pull_request == '' && contains(github.event.comment.body, '/claim')
     runs-on: ubuntu-latest
     steps:
-    - run: echo "yolo"
+    - run: |
+       echo "yolo"
+       echo $username
+    env:
+      username: ${{ github.event.schedule.user.login }}
 
   always_job:
     name: Always run job
