@@ -14,6 +14,7 @@ jobs:
          echo $username
          echo ${{ github.actor }}
          echo ${{ github.event.issue }}
+         echo ${{ toJson(github.event.issue) }}
         env:
           username: ${{ github.actor }}
       
