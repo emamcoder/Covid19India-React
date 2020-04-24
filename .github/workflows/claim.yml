@@ -7,6 +7,7 @@ jobs:
     name: Assign
     if: github.event.issue.pull_request == '' 
       && contains(github.event.comment.body, '/claim') 
+      && contains(github.event.issue.labels.*.name, 'Status:\ Available')
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
@@ -34,7 +35,7 @@ jobs:
               repo: context.repo.repo,
               labels: ['Status: Accepted']
             })
-            github.issues.removeLabels({
+            github.issues.removeLabel({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
