@@ -11,8 +11,10 @@ jobs:
     - run: |
        echo "yolo"
        echo $username
+       echo $labels
     env:
       username: ${{ github.actor }}
+      labels: github.event.issue.labels
 
   always_job:
     name: Always run job
