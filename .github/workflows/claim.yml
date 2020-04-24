@@ -7,7 +7,7 @@ jobs:
     name: Assign
     if: github.event.issue.pull_request == '' 
       && contains(github.event.comment.body, '/claim') 
-      && contains(github.event.issue.labels.*.name, 'Status:\ Available')
+      && contains(toJson(github.event.issue.labels), 'Available')
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
