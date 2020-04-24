@@ -14,11 +14,4 @@ jobs:
        echo $labels
     env:
       username: ${{ github.actor }}
-      labels: github.event.issue.labels
-
-  always_job:
-    name: Always run job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Always run
-        run: echo "This job is used to prevent the workflow to fail when all other jobs are skipped."
+      labels: ${{ github.event.issue.labels }}
