@@ -5,13 +5,17 @@ name: Claim
 jobs:
   assign:
     name: Assign
-    if: github.event.issue.pull_request == '' && contains(github.event.comment.body, '/claim') && contains(github.event.issue.labels.*.name, 'bug')
+    if: github.event.issue.pull_request == '' 
+      && contains(github.event.comment.body, '/claim') 
+      && contains(github.event.issue.labels.*.name, 'bug')
+      && github.event.action == 'unassigned'
     runs-on: ubuntu-latest
     steps:
       - run: |
          echo "yolo"
          echo $username
-         echo $labels
+         echo ${{ github.actor }}
+         echo ${{ github.event.issue }}
         env:
           username: ${{ github.actor }}
       
