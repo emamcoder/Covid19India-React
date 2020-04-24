@@ -14,4 +14,4 @@ jobs:
        echo $labels
     env:
       username: ${{ github.actor }}
-      labels: ${{ github.event.issue.labels }}
+      labels: ${{ github.event.issue.labels.*.name }}
