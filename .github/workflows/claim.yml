@@ -34,16 +34,16 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: ['Status: Accepted']
-            })
+              })
             github.issues.removeLabel({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Status: Available'
-            })
-
-      - uses: pozil/auto-assign-issue@v1
-        with:
-           repo-token: ${{ secrets.GITHUB_TOKEN }}
-           assignees: ${{ github.actor }}
-
+              })
+            github.issues.addAssignees({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              assignees: [github.actor]
+              })
