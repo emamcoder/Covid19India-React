@@ -7,7 +7,7 @@ jobs:
     name: Assign
     if: github.event.issue.pull_request == '' 
       && contains(github.event.comment.body, '/claim') 
-      && contains(github.event.issue.labels.*.name, "Available")
+      && contains(github.event.issue.labels.*.name, 'Available')
       && github.event.action == 'unassigned'
     runs-on: ubuntu-latest
     steps:
