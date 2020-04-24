@@ -5,9 +5,7 @@ name: Claim
 jobs:
   assign:
     name: Assign
-    if: github.event.issue.pull_request == '' 
-      && contains(github.event.comment.body, '/claim') 
-      && contains(github.event.issue.labels.*.name, 'Available')
+    if: github.event.issue.pull_request == '' && contains(github.event.comment.body, '/claim') && contains(github.event.issue.labels.*.name, 'Available')
     runs-on: ubuntu-latest
     steps:
       - run: |
