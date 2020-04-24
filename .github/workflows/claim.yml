@@ -7,13 +7,15 @@ jobs:
     name: Assign
     if: github.event.issue.pull_request == '' 
       && contains(github.event.comment.body, '/claim') 
-      && contains(github.event.issue.labels.*.name, 'invalid')
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          just_labels: ${{ toJson(github.event.issue.labels) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+          echo "$just_labels"
       - run: |
          echo "yolo"
          echo $username
@@ -31,6 +33,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: ['Status: Accepted']
+            })
+            github.issues.removeLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Status: Available']
             })
 
       - uses: pozil/auto-assign-issue@v1
