@@ -30,11 +30,11 @@ jobs:
         uses: buildsville/add-remove-label@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          label: "Status: Assigned"
+          label: "invalid"
           type: add
       - name: removelabel
         uses: buildsville/add-remove-label@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
-          label: "Status: Available"
+          label: "bug"
           type: remove
