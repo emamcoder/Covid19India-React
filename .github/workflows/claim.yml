@@ -7,7 +7,7 @@ jobs:
     name: Assign
     if: github.event.issue.pull_request == '' 
       && contains(github.event.comment.body, '/claim') 
-      && contains(github.event.issue.labels.*.name, 'bug')
+      && contains(github.event.issue.labels.*.name, "Available")
       && github.event.action == 'unassigned'
     runs-on: ubuntu-latest
     steps:
@@ -23,3 +23,16 @@ jobs:
         with:
            repo-token: ${{ secrets.GITHUB_TOKEN }}
            assignees: ${{ github.actor }}
+
+      - name: addlabel
+        uses: buildsville/add-remove-label@v1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          label: "Status: Assigned"
+          type: add
+      - name: removelabel
+        uses: buildsville/add-remove-label@v1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          label: "Status: Available"
+          type: remove
