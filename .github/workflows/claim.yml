@@ -21,20 +21,15 @@ jobs:
         env:
           username: ${{ github.actor }}
       
+      - uses: actions/github-script@0.9.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.addLabels({...context.issue, labels: ['invalid']})
+
+
       - uses: pozil/auto-assign-issue@v1
         with:
            repo-token: ${{ secrets.GITHUB_TOKEN }}
            assignees: ${{ github.actor }}
 
-      - name: addlabel
-        uses: buildsville/add-remove-label@v1
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          label: "invalid"
-          type: add
-      - name: removelabel
-        uses: buildsville/add-remove-label@v1
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          label: "bug"
-          type: remove
