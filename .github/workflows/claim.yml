@@ -12,7 +12,7 @@ jobs:
        echo "yolo"
        echo $username
     env:
-      username: ${{ github.event.schedule.user.login }}
+      username: ${{ github.actor }}
 
   always_job:
     name: Always run job
