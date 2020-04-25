@@ -22,8 +22,8 @@ jobs:
               username: context.payload.sender.login,
             });
             console.log(data);
-            console.log("User team status: "+data.status);
-            if(data.status != "active"){
+            console.log("User team state: "+data.state);
+            if(data.state != "active"){
               return;
             }
             await github.issues.removeLabel({
