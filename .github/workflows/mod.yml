@@ -3,28 +3,13 @@ on:
     types: [created]
 name: Mods
 jobs:
-  assign:
+  moderate:
     name: Make issue Available
     if: github.event.issue.pull_request == '' 
       && contains(github.event.comment.body, '/available') 
       && contains(toJson(github.event.issue.labels), 'Review Needed')
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          just_labels: ${{ toJson(github.event.issue.labels) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-          echo "$just_labels"
-      - run: |
-         echo "yolo"
-         echo $username
-         echo ${{ github.actor }}
-         echo ${{ github.event.issue }}
-        env:
-          username: ${{ github.actor }}
-      
       - uses: actions/github-script@0.9.0
         env:
           username: ${{ github.actor }}
@@ -36,6 +21,26 @@ jobs:
               team_slug: "mods",
               username: context.payload.sender.login,
             });
-            console.log(data);
-            console.log("The role is: "+data.role);
+            console.log("User team status: "+data.status);
+            if(data.status != "active"){
+              return;
+            }
+            await github.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Review Needed'
+              })
+            await github.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Status: Available']
+              })
+            await github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'This issue is available for contrubution.\n\nPlease reply /claim to work on this issue.'
+            })
             
