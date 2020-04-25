@@ -36,6 +36,7 @@ jobs:
               team_slug: "mods",
               username: context.payload.sender.login,
             });
+            ret = ret.json();
             console.log(ret);
             console.log("The role is: "+ret.data.role);
             
