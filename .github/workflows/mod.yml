@@ -31,9 +31,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            await github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'This issue has been made available for contribution.\n\nPost a comment with /claim if you wish to work on it.'
-            })
+            ret = await github.teams.getMembershipInOrg({
+              org: "covid19india",
+              team_slug: "mods",
+              username: context.payload.sender.login,
+            });
+            console.log(ret);
+            
