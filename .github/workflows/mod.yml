@@ -33,7 +33,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: 'Review Needed'
+              name: 'Status: Review Needed'
               })
             await github.issues.addLabels({
               issue_number: context.issue.number,
