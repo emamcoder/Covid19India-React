@@ -1,0 +1,39 @@
+on: 
+  issue_comment:
+    types: [created]
+name: Mods
+jobs:
+  assign:
+    name: Make issue Available
+    if: github.event.issue.pull_request == '' 
+      && contains(github.event.comment.body, '/available') 
+      && contains(toJson(github.event.issue.labels), 'Review Needed')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+          just_labels: ${{ toJson(github.event.issue.labels) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+          echo "$just_labels"
+      - run: |
+         echo "yolo"
+         echo $username
+         echo ${{ github.actor }}
+         echo ${{ github.event.issue }}
+        env:
+          username: ${{ github.actor }}
+      
+      - uses: actions/github-script@0.9.0
+        env:
+          username: ${{ github.actor }}
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'This issue has been made available for contribution.\n\nPost a comment with /claim if you wish to work on it.'
+            })
