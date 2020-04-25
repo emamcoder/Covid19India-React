@@ -31,12 +31,11 @@ jobs:
         with:
           github-token: ${{secrets.jun_token}}
           script: |
-            ret = await github.teams.getMembershipInOrg({
+            const { data } = await github.teams.getMembershipInOrg({
               org: "covid19india",
               team_slug: "mods",
               username: context.payload.sender.login,
             });
-            ret = ret.json();
-            console.log(ret);
-            console.log("The role is: "+ret.data.role);
+            console.log(data);
+            console.log("The role is: "+data.role);
             
