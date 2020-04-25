@@ -31,6 +31,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            ret = await github.teams.list({
+              org: "covid19india"
+            });
+            console.log(ret)
             ret = await github.teams.getMembershipInOrg({
               org: "covid19india",
               team_slug: "mods",
