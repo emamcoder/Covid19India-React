@@ -37,5 +37,5 @@ jobs:
               username: context.payload.sender.login,
             });
             console.log(ret);
-            console.log("The role is: "+ret.role);
+            console.log("The role is: "+ret.data.role);
             
