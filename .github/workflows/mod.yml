@@ -29,7 +29,7 @@ jobs:
         env:
           username: ${{ github.actor }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{secrets.jun_token}}
           script: |
             ret = await github.teams.list({
               org: "covid19india"
