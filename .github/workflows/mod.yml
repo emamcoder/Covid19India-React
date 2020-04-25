@@ -21,6 +21,7 @@ jobs:
               team_slug: "mods",
               username: context.payload.sender.login,
             });
+            console.log(data);
             console.log("User team status: "+data.status);
             if(data.status != "active"){
               return;
